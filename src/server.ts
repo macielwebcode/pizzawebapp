@@ -1,5 +1,5 @@
 import express, { Request, Response, NextFunction } from "express";
-
+import path from 'path'
 import { router } from './routes'
 
 import cors from 'cors'
@@ -15,6 +15,11 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors())
 
 app.use(router)
+
+app.use(
+    '/files',
+    express.static(path.resolve(__dirname, '..', 'tmp'))
+)
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     if(err instanceof Error){
